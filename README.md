@@ -20,15 +20,14 @@ Copyright 2018 - The LineageOS Project.
 
 ![OnePlus 6T](https://cdn2.gsmarena.com/vv/pics/oneplus/oneplus-6t-thunder-purple-1.jpg "OnePlus 6T")
 
-## Temporary build instructions
 
-```
-# Compiling
-$ m[ake|ka] bootimage systemimage
+## Hola amiguitos
 
-# Installing
-$ fastboot --disable-verity --disable-verification flash vbmeta stock_vbmeta.img
-$ fastboot flash boot boot.img
-$ fastboot flash system system.img
-$ fastboot -w reboot
-```
+This branch is for building TWRP recovery & derivatives, based on my crDroid device tree for OnePlus 6T (fajita).
+TWRP commits adapted from work by:
+* nebrassy <nebras30@gmail.com>
+* siddhrsh <skoyande17@gmail.com>
+* others I'm sure (like, y'know, mauronofrio <poronofrio@gmail.com>)
+* ...and the financial support of viewers like you!
+
+Rebased on the official lineage-18.1 branch of the LineageOS device tree as of September 2021.
