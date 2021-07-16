@@ -32,4 +32,4 @@ DEVICE_FRAMEWORK_MANIFEST_FILE += $(DEVICE_PATH)/framework_manifest.xml
 TARGET_KERNEL_CONFIG := enchilada_defconfig
 
 # inherit from the proprietary version
--include vendor/oneplus/fajita/BoardConfigVendor.mk
+#include vendor/oneplus/fajita/BoardConfigVendor.mk
