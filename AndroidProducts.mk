@@ -15,9 +15,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/aicp_fajita.mk
+    $(LOCAL_DIR)/twrp_fajita.mk
 
 COMMON_LUNCH_CHOICES := \
-    aicp_fajita-user \
-    aicp_fajita-userdebug \
-    aicp_fajita-eng
+    twrp_fajita-user \
+    twrp_fajita-userdebug \
+    twrp_fajita-eng
