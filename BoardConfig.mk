@@ -26,7 +26,7 @@ TARGET_SURFACEFLINGER_FOD_LIB := //$(DEVICE_PATH):libfod_extension.oneplus_fajit
 DEVICE_FRAMEWORK_MANIFEST_FILE += $(DEVICE_PATH)/framework_manifest.xml
 
 # inherit from the proprietary version
--include vendor/oneplus/fajita/BoardConfigVendor.mk
+#-include vendor/oneplus/fajita/BoardConfigVendor.mk
 
 # Properties
 TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
