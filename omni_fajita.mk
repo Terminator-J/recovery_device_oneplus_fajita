@@ -17,10 +17,8 @@
 # Release name
 PRODUCT_RELEASE_NAME := fajita
 
-$(call inherit-product, build/target/product/aosp_base.mk)
-
 # Inherit from our custom product configuration
-$(call inherit-product, vendor/omni/config/common.mk)
+$(call inherit-product, vendor/pb/config/common.mk)
 
 # Inherit from hardware-specific part of the product configuration
 $(call inherit-product, device/oneplus/fajita/device.mk)
@@ -33,7 +31,7 @@ PRODUCT_MODEL := OnePlus A6013
 PRODUCT_MANUFACTURER := OnePlus
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    PRODUCT_NAME=OnePlus6T \
+    PRODUCT_NAME=oneplus6t \
     BUILD_PRODUCT=OnePlus6T \
     TARGET_DEVICE=OnePlus6T
 
