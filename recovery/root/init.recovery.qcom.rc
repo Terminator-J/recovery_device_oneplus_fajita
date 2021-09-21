@@ -49,7 +49,6 @@ on boot
     start patchfakepartitions-service
     start health-hal-2-1
 
-
 on fs
     start boot-hal-1-0
 

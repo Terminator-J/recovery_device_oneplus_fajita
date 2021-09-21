@@ -69,13 +69,15 @@ TW_INCLUDE_CRYPTO := true
 TW_INCLUDE_CRYPTO_FBE := true
 PLATFORM_SECURITY_PATCH := 2099-12-31
 VENDOR_SECURITY_PATCH := 2099-12-31
-PLATFORM_VERSION := 16.1.0
+PLATFORM_VERSION := 20.1.0
 BOARD_USES_QCOM_FBE_DECRYPTION := true
 
 TARGET_RECOVERY_DEVICE_MODULES += libion libandroidicu vendor.display.config@1.0 vendor.display.config@2.0 libdisplayconfig.qti libhardware_legacy android.system.suspend@1.0
 
 # TWRP specific build flags
+AB_OTA_UPDATER := true
 ALLOW_MISSING_DEPENDENCIES := true
+BOARD_HAS_NO_REAL_SDCARD := true
 TW_THEME := portrait_hdpi
 RECOVERY_SDCARD_ON_DATA := true
 TARGET_RECOVERY_QCOM_RTC_FIX := true
@@ -87,6 +89,8 @@ TW_INCLUDE_RESETPROP := true
 TW_INCLUDE_REPACKTOOLS := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
+TW_MAX_BRIGHTNESS := 1023
+TW_DEFAULT_BRIGHTNESS := 420
 TW_Y_OFFSET := 80
 TW_H_OFFSET := -80
 TWRP_INCLUDE_LOGCAT := true
@@ -106,3 +110,22 @@ RECOVERY_LIBRARY_SOURCE_FILES += \
 
 PRODUCT_COPY_FILES += \
     $(OUT_DIR)/target/product/fajita/obj/SHARED_LIBRARIES/libandroidicu_intermediates/libandroidicu.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/libandroidicu.so
+
+# Extras
+BOARD_PROVIDES_GPTUTILS := true
+BOARD_SUPPRESS_SECURE_ERASE := true
+TW_EXCLUDE_TWRPAPP := true
+TW_INCLUDE_REPACKTOOLS := true
+
+TARGET_RECOVERY_WIPE := device/oneplus/fajita/recovery.wipe
+TARGET_RECOVERY_FSTAB := device/oneplus/fajita/recovery.fstab
+
+# A/B updater updatable partitions list. Keep in sync with the partition list
+# with "_a" and "_b" variants in the device. Note that the vendor can add more
+# more partitions to this list for the bootloader and radio.
+AB_OTA_PARTITIONS += \
+    boot \
+    system \
+    vendor \
+    vbmeta \
+    dtbo
