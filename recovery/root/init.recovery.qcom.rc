@@ -34,7 +34,7 @@ on fs
     symlink /dev/block/bootdevice/by-name/oem_stanvbk /dev/block/bootdevice/by-name/oem_stanvbk_b
     symlink /dev/block/bootdevice/by-name/oem_dycnvbk /dev/block/bootdevice/by-name/oem_dycnvbk_a
     symlink /dev/block/bootdevice/by-name/oem_dycnvbk /dev/block/bootdevice/by-name/oem_dycnvbk_b
-
+    mount ext4 /dev/block/bootdevice/by-name/system${ro.boot.slot_suffix} /system flags=slotselect
 service patchfakepartitions-service /system/bin/patchfakepartitions-service.sh
     user root
     group root
