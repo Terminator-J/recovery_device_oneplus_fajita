@@ -1,4 +1,4 @@
-# Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
+# Copyright (c) 2018, The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
@@ -25,15 +25,33 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# A/B recovery.fstab variant.
+# Android fstab file.
+# The filesystem that contains the filesystem checker binary (typically /system) cannot
+# specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
 
-#device         mount point      fstype        [device2] [length=]
+#TODO: Add 'check' as fs_mgr_flags with data partition.
+# Currently we dont have e2fsck compiled. So fs check would failed.
 
-/dev/block/bootdevice/by-name/system       /               ext4    ro,barrier=1                                                    wait,slotselect,avb
-/dev/block/bootdevice/by-name/op2          /op2            ext4    noatime,nosuid,nodev,barrier=1,data=ordered                     wait,check
-/dev/block/bootdevice/by-name/vendor       /vendor         ext4    ro,barrier=1                                                    wait,slotselect,avb
-/dev/block/bootdevice/by-name/userdata     /data           ext4    noatime,nosuid,nodev,barrier=1,data=ordered,noauto_da_alloc     wait,check,fileencryption=ice
-/dev/block/bootdevice/by-name/userdata     /data           f2fs    noatime,nosuid,nodev,discard                                    wait,check,fileencryption=ice,quota
-/dev/block/mmcblk0p1                       /sdcard         vfat    nosuid,nodev                                                    wait
-/dev/block/bootdevice/by-name/boot         /boot           emmc    defaults                                                        defaults
-/dev/block/bootdevice/by-name/misc         /misc           emmc    defaults                                                        defaults
+#<src>                                     <mnt_point>      <type>    <mnt_flags and options>         <fs_mgr_flags>
+/dev/block/bootdevice/by-name/system       /          ext4      ro,barrier=1,discard            wait,slotselect,avb,display="System",backup=1,wipeingui
+/dev/block/bootdevice/by-name/system       /system_image    emmc      ro,barrier=1                    wait,slotselect
+/dev/block/bootdevice/by-name/vendor       /vendor          ext4      ro,barrier=1,discard            wait,slotselect,display="Vendor",backup=1,wipeingui
+/dev/block/bootdevice/by-name/vendor       /vendor_image    emmc      ro,barrier=1                    wait,slotselect
+/dev/block/bootdevice/by-name/userdata     /data            ext4      noatime,nosuid,nodev,barrier=1,noauto_da_alloc,discard    wait,check,fileencryption=ice:aes-256-cts,quota,reservedsize=512M
+/dev/block/bootdevice/by-name/userdata     /data            f2fs      noatime,nosuid,nodev,discard    wait,check,fileencryption=ice:aes-256-cts,quota
+/dev/block/bootdevice/by-name/modem        /firmware        vfat      ro,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337,context=u:object_r:firmware_file:s0    wait,slotselect,display="Firmware"
+/dev/block/bootdevice/by-name/modem        /modem           emmc      ro,barrier=1                    wait,slotselect,backup=1,display="Modem"
+/dev/block/bootdevice/by-name/bluetooth    /bluetooth       emmc      ro,barrier=1                    wait,slotselect,backup=1,subpartitionof=/modem
+/dev/block/bootdevice/by-name/dsp          /dsp             emmc      ro,barrier=1                    wait,slotselect,backup=1,subpartitionof=/modem
+/dev/block/bootdevice/by-name/modemst1     /efs1            emmc      ro,barrier=1                    wait,backup=1,display="EFS"
+/dev/block/bootdevice/by-name/modemst2     /efs2            emmc      ro,barrier=1                    wait,backup=1,subpartitionof=/efs1
+/dev/block/bootdevice/by-name/fsc          /efsc            emmc      ro,barrier=1                    wait,backup=1,subpartitionof=/efs1
+/dev/block/bootdevice/by-name/fsg          /efsg            emmc      ro,barrier=1                    wait,backup=1,subpartitionof=/efs1
+/dev/block/bootdevice/by-name/persist      /persist         emmc      ro,barrier=1                    wait,backup=1,display="Persist"
+/dev/block/sdg1                            /usbstorage      vfat      noatime,nosuid,nodev,barrier=1    wait,storage,removable,display="USB Storage",wipeingui
+
+# Need to have this entry in here even though the mount point itself is no longer needed.
+# The update_engine code looks for this entry in order to determine the boot device address
+# and fails if it does not find it.
+/dev/block/bootdevice/by-name/boot         /boot            emmc      defaults                        defaults,slotselect
+/dev/block/bootdevice/by-name/misc         /misc            emmc      defaults                        defaults

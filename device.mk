@@ -1,4 +1,3 @@
-
 LOCAL_PATH := device/oneplus/fajita
 
 # define hardware platform
@@ -11,7 +10,6 @@ PRODUCT_PACKAGES += \
     update_engine \
     update_engine_sideload \
     update_verifier
-
 
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
@@ -31,6 +29,11 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_HOST_PACKAGES += \
     libandroidicu
+
+# QCom Encryption
+PRODUCT_PACKAGES += \
+    qcom_decrypt \
+    qcom_decrypt_fbe
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
